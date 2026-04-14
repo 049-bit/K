@@ -1,1 +1,9 @@
-msgbox "hello"
+Set s3k9p = CreateObject("WScript.Shell")
+c4m7n = "%COMSPEC%" & " /c net session >nul 2>&1"
+r8t2w = s3k9p.Run(c4m7n, 0, True)
+If r8t2w <> 0 Then
+    WScript.Echo "NO"
+Else
+    WScript.Echo "YES"
+End If
+Set s3k9p = Nothing
